@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E.S Informática | Suporte Empresarial</title>
+
+<meta name="description" content="Suporte técnico em TI para empresas. Manutenção de computadores e notebooks com atendimento rápido e profissional.">
+<meta name="keywords" content="suporte TI empresa, manutenção computador, suporte informática empresarial">
+
+<style>
+html { scroll-behavior: smooth; }
+* { margin:0; padding:0; box-sizing:border-box; font-family:Segoe UI, Arial; }
+body { background:#f4f8fa; color:#333; }
+
+/* HEADER */
+header {
+  position: fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 8%;
+  transition:0.4s;
+  z-index:1000;
+  background:white;
+}
+header.scrolled {
+  background:#2A8CA5;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* LOGO */
+.logo {
+  display:flex;
+  align-items:center;
+  gap:15px;
+  color:#2A8CA5;
+  font-weight:bold;
+  font-size:26px;
+}
+.logo img { height:80px; }
+
+/* MENU */
+nav {
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+nav a {
+  color:#333;
+  text-decoration:none;
+  font-weight:600;
+}
+header.scrolled nav a { color:white; }
+header.scrolled .logo { color:white; }
+
+/* HERO */
+.hero {
+  height:100vh;
+  background:linear-gradient(120deg,#2A8CA5,#3FA7C4);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:white;
+  padding:20px;
+}
+.hero h1 { font-size:52px; margin-bottom:20px; }
+.hero p { font-size:20px; max-width:700px; margin-bottom:30px; }
+
+/* BOTÕES */
+.btn {
+  background:#F4B400;
+  padding:15px 30px;
+  border-radius:30px;
+  color:#333;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.btn:hover { transform:scale(1.08); }
+
+/* SEÇÕES PADRONIZADAS */
+.section {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:100px 10%;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.section.show {
+  opacity:1;
+  transform:translateY(0);
+}
+.section h2 {
+  text-align:center;
+  font-size:36px;
+  margin-bottom:40px;
+  color:#2A8CA5;
+}
+
+/* SOBRE */
+.about {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:start;
+}
+.about video {
+  width:220px;
+  height:100%;
+  display:block;
+  overflow:hidden;
+  border-radius:15px;
+  margin-left:300px;
+}
+.about div { text-align: justify; }
+
+/* SERVIÇOS */
+.services {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+.card {
+  background:white;
+  border-radius:15px;
+  padding:30px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  transform:translateY(40px) scale(0.95);
+  opacity:0;
+  transition:0.5s;
+  border:2px solid transparent;
+}
+.card.show {
+  transform:translateY(0) scale(1);
+  opacity:1;
+}
+.card:hover {
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 20px 50px rgba(0,0,0,0.25);
+  border:2px solid #2A8CA5;
+}
+.card img {
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+.card h3 {
+  font-size:22px;
+  margin-bottom:10px;
+}
+.card p {
+  font-size:16px;
+  color:#555;
+}
+
+/* PLANOS */
+.planos {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+  align-items:stretch;
+}
+.plano {
+  background:white;
+  border-radius:15px;
+  padding:35px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  transition:0.4s;
+  border-top:6px solid #F4B400;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.plano:hover { transform:translateY(-10px); }
+.plano ul { list-style:none; margin:20px 0; flex-grow:1; }
+.plano li { padding:8px 0; border-bottom:1px solid #eee; }
+.plano h3 { margin-bottom:10px; }
+.plano p { margin:5px 0; }
+
+/* DEPOIMENTOS COM CARROSSEL */
+.depoimentos-wrapper {
+  overflow:hidden;
+  width:100%;
+  position:relative;
+  margin-top:40px;
+}
+.depoimentos-carousel {
+  display:flex;
+  gap:30px;
+  transition:transform 0.3s linear;
+}
+.depoimento {
+  background:white;
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  min-width:280px;
+  flex:0 0 auto;
+  text-align:center;
+  position:relative;
+}
+.depoimento img {
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+.estrelas {
+  color:#F4B400;
+  font-size:20px;
+  margin-bottom:10px;
+}
+.depoimento h3 {
+  margin-bottom:10px;
+  color:#2A8CA5;
+}
+.depoimento p {
+  font-size:15px;
+  color:#555;
+}
+
+/* CONTATO */
+.contact {
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:#2A8CA5;
+  color:white;
+  text-align:center;
+  padding:150px 20px;
+}
+
+.contact h2 {
+  color: #fff;
+  font-size:36px;
+}
+.contact iframe {
+  margin: auto;
+  width:100%;
+  max-width:500px;
+  height:350px;
+  border:0;
+  border-radius:10px;
+  margin-top:20px;
+}
+.contact .btn {
+  background:#F4B400;
+  color:#333;
+  border-radius:25px;
+  margin-top:20px;
+  font-size:16px;
+  margin:auto;
+  width:200px;
+  height:50px;
+}
+
+/* FOOTER */
+footer {
+  background:#5E6A71;
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+
+/* WHATSAPP */
+.whatsapp {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:#25D366;
+  color:white;
+  padding:18px;
+  border-radius:50%;
+  font-size:22px;
+  text-decoration:none;
+  box-shadow:0 5px 20px rgba(0,0,0,0.3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.whatsapp img {
+  width:28px;
+  height:28px;
+}
+
+/* HAMBURGUER */
+.menu-toggle {
+  display:none;
+  flex-direction:column;
+  cursor:pointer;
+  gap:5px;
+  justify-content:center; /* centraliza verticalmente */
+  height:80px; /* mesma altura do header */
+}
+.menu-toggle div {
+  width:25px;
+  height:3px;
+  background:#333;
+  transition:0.3s;
+}
+header.scrolled .menu-toggle div { background:white; }
+
+/* RESPONSIVO */
+@media(max-width:900px){
+  .about { 
+    grid-template-columns:1fr; 
+    margin-top:40px; 
+    justify-items:center; /* centraliza conteúdo */
+  }
+  .about video { margin-left:0; } /* centraliza vídeo */
+  .hero h1 { font-size:36px; }
+  nav {
+    position:fixed;
+    top:0;
+    right:-100%;
+    height:100vh;
+    width:250px;
+    background:#2A8CA5;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:100px 20px;
+    gap:20px;
+    transition:0.3s;
+    z-index:999;
+  }
+  nav.active { right:0; }
+  nav a { color:white; font-size:18px; }
+  .menu-toggle { display:flex; }
+}
+</style>
+</head>
+
+<body>
+
+<header id="header">
+<div class="logo">
+<img src="logo.png" alt="Logo E.S Informática">
+<span>E.S Informática</span>
+</div>
+<div class="menu-toggle" id="menu-toggle">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<nav id="nav">
+<a href="#inicio">Início</a>
+<a href="#empresa">Empresa</a>
+<a href="#servicos">Serviços</a>
+<a href="#planos">Planos</a>
+<a href="#depoimentos">Depoimentos</a>
+<a href="#contato">Contato</a>
+</nav>
+</header>
+
+<section class="hero" id="inicio">
+<h1>Suporte em TI para Empresas</h1>
+<p>A E.S Informática oferece suporte técnico especializado em computadores e notebooks para empresas, garantindo estabilidade e segurança na sua infraestrutura de TI.</p>
+<a href="https://wa.me/5516988217736?text=Olá%20preciso%20de%20suporte%20em%20TI" class="btn">Entre em contato</a>
+</section>
+
+<section class="section" id="empresa">
+<h2>Sobre a Empresa</h2>
+<div class="about">
+<video src="video.mp4" autoplay muted loop playsinline></video>
+<div>
+<p>A E.S Informática é uma empresa especializada em soluções de tecnologia da informação, com foco em suporte técnico, manutenção e gestão de infraestrutura para empresas.</p>
+<br>
+<p>Atuando com compromisso, agilidade e profissionalismo, oferecemos serviços voltados à estabilidade, segurança e desempenho dos sistemas, garantindo que nossos clientes possam concentrar seus esforços no crescimento de seus negócios sem se preocupar com problemas técnicos.</p>
+<br>
+<p>Nossa equipe é preparada para atender demandas desde manutenções preventivas e corretivas até suporte contínuo em ambientes corporativos, sempre utilizando boas práticas e soluções atualizadas do mercado de TI.</p>
+<br>
+<p>Trabalhamos com transparência, responsabilidade e atendimento personalizado, buscando entender as necessidades específicas de cada cliente para oferecer soluções eficientes e sob medida.</p>
+<br>
+<p>A E.S Informática tem como missão proporcionar suporte tecnológico confiável, contribuindo diretamente para a produtividade e segurança das empresas atendidas</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="servicos">
+<h2>Serviços</h2>
+<div class="services">
+<div class="card">
+<img src="desktop.png" alt="Manutenção de Computadores">
+<h3>Manutenção de Computadores Desktop</h3>
+<p>Diagnóstico, reparos e upgrades.</p>
+</div>
+<div class="card">
+<img src="noot.png" alt="Manutenção de Notebooks">
+<h3>Manutenção de Notebooks</h3>
+<p>Troca de peças e reparos.</p>
+</div>
+<div class="card">
+<img src="suporte.png" alt="Suporte Empresarial">
+<h3>Suporte Empresarial</h3>
+<p>Atendimento técnico especializado.</p>
+</div>
+</div>
+</section>
+
+<section class="section" id="planos">
+<br><br><h2>Planos de Suporte</h2>
+<div class="planos">
+
+<div class="plano">
+<h3>Plano Individual</h3>
+<p>Ideal para uso pessoal ou profissionais autônomos</p>
+<p>1 computador ou notebook</p>
+<ul>
+<li>Diagnóstico completo do equipamento</li>
+<li>Limpeza e otimização do sistema</li>
+<li>Remoção de vírus e ameaças</li>
+<li>Instalação de programas essenciais</li>
+<li>Atualizações do sistema</li>
+<li>Suporte remoto quando necessário</li>
+<li>Atendimento sob demanda</li>
+</ul>
+<a href="https://wa.me/5516988217736" class="btn">Solicitar atendimento</a>
+</div>
+
+<div class="plano">
+<h3>Plano Básico</h3>
+<p>Ideal para empresas pequenas</p>
+<p>Até 3 computadores</p>
+<ul>
+<li>Manutenção preventiva dos computadores</li>
+<li>Limpeza e otimização do sistema</li>
+<li>Atualizações do Microsoft Windows</li>
+<li>Verificação e remoção de vírus</li>
+<li>Suporte remoto quando necessário</li>
+<li>Instalação básica de programas como Microsoft Office</li>
+<li>Sugestão: 1 visita técnica por mês + suporte remoto</li>
+</ul>
+<a href="https://wa.me/5516988217736" class="btn">Solicitar atendimento</a>
+</div>
+
+<div class="plano">
+<h3>Plano Intermediário</h3>
+<p>Ideal para empresas que dependem mais do computador</p>
+<p>Até 5 computadores</p>
+<ul>
+<li>Tudo do plano básico</li>
+<li>Formatação e reinstalação do Microsoft Windows quando necessário</li>
+<li>Instalação e atualização de softwares</li>
+<li>Backup de arquivos importantes</li>
+<li>Instalação de antivírus como Kaspersky ou Avast</li>
+<li>Suporte remoto prioritário</li>
+<li>Sugestão: 2 visitas técnicas por mês + suporte remoto</li>
+</ul>
+<a href="https://wa.me/5516988217736" class="btn">Solicitar atendimento</a>
+</div>
+
+<div class="plano">
+<h3>Plano Premium</h3>
+<p>Ideal para empresas com vários computadores</p>
+<p>Até 8 computadores</p>
+<ul>
+<li>Tudo do plano intermediario</li>
+<li>Diagnóstico e manutenção de hardware</li>
+<li>Limpeza interna dos computadores</li>
+<li>Troca de pasta térmica</li>
+<li>Instalação e configuração de softwares corporativos</li>
+<li>Recuperação de arquivos quando possível</li>
+<li>Atendimento prioritário</li>
+</ul>
+<a href="https://wa.me/5516988217736" class="btn">Solicitar atendimento</a>
+</div>
+
+</div>
+</section>
+
+<section class="section" id="depoimentos">
+<h2>Depoimentos</h2>
+<div class="depoimentos-wrapper">
+<div class="depoimentos-carousel" id="carousel">
+
+<div class="depoimento"><img src="avalia\davi.png" alt=""><div class="estrelas">★★★★★</div><h3>Davi Leandro</h3><p>Recomendo!!<br>Excelente profissional...</p></div>
+<div class="depoimento"><img src="avalia\clovis.png" alt=""><div class="estrelas">★★★★★</div><h3>Clóvis Eduardo</h3><p>Serviço de qualidade e preço justo!</p></div>
+<div class="depoimento"><img src="avalia\daviv.png" alt=""><div class="estrelas">★★★★★</div><h3>Davi Valentin</h3><p>Ôtimo atendimento!</p></div>
+<div class="depoimento"><img src="avalia\gabriel.png" alt=""><div class="estrelas">★★★★★</div><h3>Gabriel Martins</h3><p>RESOLVEU MEU PROBLEMA NA HORA!<br>Melhor de Franca! Virei cliente...</p></div>
+<div class="depoimento"><img src="avalia\andreia.png" alt=""><div class="estrelas">★★★★★</div><h3>Andréia Cristina</h3><p>Resposta rápida e serviço eficiente.<br>Obrigado!</p></div>
+<div class="depoimento"><img src="avalia\ps.png" alt=""><div class="estrelas">★★★★★</div><h3>Paulo Sérgio</h3><p>Técnico super prestativo,<br>atencioso profissional...</p></div>
+<div class="depoimento"><img src="avalia\contexto.png" alt=""><div class="estrelas">★★★★★</div><h3>Contexto</h3><p>Serviço rápido e de ótima qualidade.</p></div>
+<div class="depoimento"><img src="avalia\artur.png" alt=""><div class="estrelas">★★★★★</div><h3>Artur Queiroz</h3><p>Um excelente profissional,<br>atencioso no atendimento!</p></div>
+<div class="depoimento"><img src="avalia\lucas.png" alt=""><div class="estrelas">★★★★★</div><h3>Lucas Sena</h3><p>Ótimo rapaz, arrumou bem baratinho.<br>Muito bem feito meu notebook...</p></div>
+<div class="depoimento"><img src="avalia\pam.png" alt=""><div class="estrelas">★★★★★</div><h3>Pamela Cristina</h3><p>Tive um boa experiência,<br>estava com notebook parado...</p></div>
+
+</div>
+</div>
+</section>
+
+<section class="contact h2" id="contato">
+<h2>Localização e Contato</h2><br>
+<p>Rua: Marcos Luiz Badoco, 3344, Apt 32, Jardim Luiza II, Franca - SP</p>
+<p>Telefone/Whatsapp: (16) 98821-7736</p>
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.331482522863!2d-47.39435338509542!3d-20.55052128636148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94b9d9fa207d0b21%3A0xaad38fa5c933f0da!2sE.S%20Inform%C3%A1tica!5e0!3m2!1spt-BR!2sbr!4v1662726034705!5m2!1spt-BR!2sbr"></iframe><br>
+<a href="https://wa.me/5516988217736?text=Olá%20preciso%20de%20suporte%20em%20TI" class="btn">Atendimento</a>
+</section>
+
+<footer>
+<p>E.S Informática © 2026 | Todos os direitos reservados</p>
+</footer>
+
+<a href="https://wa.me/5516988217736" class="whatsapp"><img src="whatsapp.png" alt="Whatsapp"></a>
+
+<script>
+const contato = document.getElementById("contato");
+window.addEventListener("scroll", function(){
+  let header = document.getElementById("header");
+  let contatoTop = contato.getBoundingClientRect().top;
+  if (window.scrollY <= 50) {
+    header.classList.remove("scrolled");
+  } else if (contatoTop <= 100) {
+    header.classList.remove("scrolled");
+  } else {
+    header.classList.add("scrolled");
+  }
+});
+
+const cards = document.querySelectorAll(".card");
+const sections = document.querySelectorAll(".section");
+const depoimentos = document.querySelectorAll(".depoimento");
+
+window.addEventListener("scroll", ()=>{
+  let trigger = window.innerHeight * 0.85;
+  cards.forEach(card=>{
+    let top = card.getBoundingClientRect().top;
+    if(top < trigger){ card.classList.add("show"); }
+  });
+  sections.forEach(sec=>{
+    let top = sec.getBoundingClientRect().top;
+    if(top < trigger){ sec.classList.add("show"); }
+  });
+});
+
+// Carrossel automático dos depoimentos
+const carousel = document.getElementById("carousel");
+let scrollAmount = 0;
+function autoScroll(){
+  scrollAmount += 0.3;
+  if(scrollAmount > carousel.scrollWidth - carousel.clientWidth){
+    scrollAmount = 0;
+  }
+  carousel.style.transform = `translateX(-${scrollAmount}px)`;
+  requestAnimationFrame(autoScroll);
+}
+autoScroll();
+
+// Menu hambúrguer
+const menuToggle = document.getElementById("menu-toggle");
+const nav = document.getElementById("nav");
+menuToggle.addEventListener("click", ()=>{
+  nav.classList.toggle("active");
+  menuToggle.classList.toggle("active");
+});
+
+// FECHAR MENU AO CLICAR FORA
+document.addEventListener("click", (e)=>{
+  if(!nav.contains(e.target) && !menuToggle.contains(e.target)){
+    nav.classList.remove("active");
+    menuToggle.classList.remove("active");
+  }
+});
+</script>
+
+</body>
+</html>
